@@ -28,13 +28,14 @@ const PostReview = () => {
       name = sessionStorage.getItem("username");
     }
     if(!model || review === "" || date === "" || year === "" || model === "") {
-      alert("All details are mandatory")
+      alert("All details are mandatory please enter")
       return;
     }
 
     let model_split = model.split(" ");
     let make_chosen = model_split[0];
     let model_chosen = model_split[1];
+
 
     let jsoninput = JSON.stringify({
       "name": name,
@@ -50,6 +51,7 @@ const PostReview = () => {
     console.log(jsoninput);
     const res = await fetch(review_url, {
       method: "POST",
+      credentials: "include",
       headers: {
           "Content-Type": "application/json",
       },
@@ -57,7 +59,9 @@ const PostReview = () => {
   });
 
   const json = await res.json();
+  console.log("status "+json.status);
   if (json.status === 200) {
+      console.log("Succefully subimtted");
       window.location.href = window.location.origin+"/dealer/"+id;
   }
 

@@ -116,6 +116,7 @@ def get_dealerships(request, state="All"):
     List of dealership 
 
     """
+    print("User is ",request.user)
     if(state == "All"):
         endpoint = "/fetchDealers"
     else:
@@ -158,11 +159,13 @@ def get_dealer_details(request, dealer_id):
 
 
 # Create a `add_review` view to submit a review
+@csrf_exempt
 def add_review(request):
     """
     Allows an authenticated user to add a review
 
     """
+    print(request.user)
     if(request.user.is_anonymous == False):
         data = json.loads(request.body)
         try:
